@@ -59,10 +59,11 @@ nav{
 }
 
 .note{
-  overflow-y: auto;
+  overflow-y: scroll;
   position: relative;
   padding-top: 2rem;
   height: 100%;
+  word-break: break-word;
 }
 
 .options{
@@ -108,11 +109,20 @@ nav{
   resize: none;
 }
 
-.new-note-add-btn{
+.new-note-btns{
   font-size: 1rem;
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: 0;
+  right: 0;
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.new-note-add-btn{
+  font-size: 1rem;
   padding: .5rem 1rem;
   background-color: #222;
   opacity: .3;
@@ -141,6 +151,7 @@ nav{
   color: white;
   font-size: 2rem;
   overflow-y: auto;
+  word-break: break-word;
   width: 500px;
   height: 500px;
   background-color: #222;

@@ -13,6 +13,11 @@ const NewNote = ({onAdd}) => {
     setNoteBody('');
   }
 
+  const cancelNote = () =>{
+    setIdle(!idle);
+    setNoteBody('');
+  }
+
   return (
     <div className="rectangle transition">
       {idle ? 
@@ -22,7 +27,10 @@ const NewNote = ({onAdd}) => {
       </div> : 
       <>
       <textarea className="new-note-input padding" value={noteBody} onChange={(e) => setNoteBody(e.target.value)}></textarea>
-      <div className="new-note-add-btn pointer transition" onClick={noteAdd}>Add</div>
+      <div className="new-note-btns">
+        <div className="new-note-add-btn pointer transition" onClick={cancelNote}>Cancel</div>
+        <div className="new-note-add-btn pointer transition" onClick={noteAdd}>Add</div>
+      </div>
       </>
       }
     </div>

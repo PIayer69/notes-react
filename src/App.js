@@ -51,7 +51,7 @@ function App() {
           notePreview && 
           <>
             <Backdrop />
-            <NotePreview note={notes.filter((note) => note.id == noteId)[0]} onClose={() => setNotePreview(false)}/>
+            <NotePreview note={notes.filter((note) => note.id === noteId)[0]} onClose={() => setNotePreview(false)}/>
           </>
         }
       </div>
