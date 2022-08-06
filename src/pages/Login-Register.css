@@ -1,0 +1,53 @@
+.form-container{
+    /* display: grid;
+    grid-template-rows: 1fr 2fr; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+    padding: 1.5rem 3rem;
+    border-radius: 15px;
+    transition: .2s all ease;
+}
+
+.form-container:hover{
+    box-shadow: 0 0 5px black;
+}
+
+.title{
+    font-size: 2rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+form input{
+    background-color: #222;
+    border-radius: 5px;
+    border: 2px solid #111;
+    padding: .5rem 1rem;
+    margin: .3rem 0;
+    color: white;
+    transition: .2s all ease;
+}
+
+form input:focus{
+    outline: 2px solid rgb(133, 0, 0);
+}
+
+form input[type='submit']{
+    cursor: pointer;
+}
+
+form input[type='submit']:hover{
+    background-color: aliceblue;
+    color: #111;
+}
