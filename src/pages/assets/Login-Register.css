@@ -1,6 +1,4 @@
 .form-container{
-    /* display: grid;
-    grid-template-rows: 1fr 2fr; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +38,7 @@ form input{
 }
 
 form input:focus{
-    outline: 2px solid rgb(133, 0, 0);
+    outline: 2px solid rgb(234, 0, 0);
 }
 
 form input[type='submit']{

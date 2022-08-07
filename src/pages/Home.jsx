@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import '../Navbar';
+import Navbar from "../Navbar";
 import Backdrop from "./components/Backdrop";
 import NewNote from "./components/NewNote";
 import NotePreview from "./components/NotePreview";
@@ -106,15 +108,18 @@ const Home = () => {
     
       return (
         <>
-            <Notes notes={notes} onDelete={deleteNote} onEdit={editNote} onPreview={toggleNotePreview}/>
+          <Navbar/>
+          <div className="container">
             <NewNote onAdd={newNote} />
+            <Notes notes={notes} onDelete={deleteNote} onEdit={editNote} onPreview={toggleNotePreview}/>
             {
-                notePreview && 
-                <>
+              notePreview && 
+              <>
                 <Backdrop />
                 <NotePreview note={notes.filter((note) => note.id === noteId)[0]} onClose={() => setNotePreview(false)}/>
-                </>
+              </>
             }
+          </div>
         </>
       );
 }

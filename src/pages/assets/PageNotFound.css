@@ -1,0 +1,33 @@
+.error-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 100%;
+}
+
+.error-left{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.error-title{
+    font-size: 2rem;
+}
+
+.error-msg{
+    font-size: 1.3rem;
+    color: #7d7d7d;
+}
+
+.error-left a{
+    text-decoration: none;
+    color: rgb(234, 0, 0);
+    display: flex;
+    align-items: center;
+}
+
+.error-left a svg{
+    margin-left: .3rem;
+}
