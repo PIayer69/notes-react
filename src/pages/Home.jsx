@@ -8,7 +8,7 @@ import NotePreview from "./components/NotePreview";
 import Notes from "./components/Notes";
 
 
-const Home = () => {
+const Home = ({api_url}) => {
     const [notes, setNotes] = useState([
         {
           id: 1,
@@ -29,13 +29,14 @@ const Home = () => {
       ])
       const [notePreview, setNotePreview] = useState(false)
       const [noteId, setNoteId] = useState(1)
-      const api_url = 'http://192.168.8.119:8000/api/notes/'
+      const notes_api_url = api_url + 'notes/' 
     
       useEffect(() => {
-        fetch(api_url)
+        console.log(notes_api_url)
+        fetch(notes_api_url)
         .then(res => res.json())
         .then((result) => setNotes(result))
-    
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
       
       const toggleNotePreview = (id) => {
@@ -48,12 +49,12 @@ const Home = () => {
       }
     
       const deleteNote = (id) => {
-        fetch(`${api_url}${id}/`, {method: 'DELETE'});
+        fetch(`${notes_api_url}${id}/`, {method: 'DELETE'});
         setNotes(notes.filter((note) => note.id !== id));
       }
     
       const newNote = (note) => {
-        fetch(`${api_url}`, 
+        fetch(`${notes_api_url}`, 
         {
           method: 'POST',
           headers: {
@@ -76,7 +77,7 @@ const Home = () => {
       }
     
       const editNote = (id, body) => {
-        fetch(`${api_url}${id}/`, 
+        fetch(`${notes_api_url}${id}/`, 
         {
           method: 'PUT',
           headers: {

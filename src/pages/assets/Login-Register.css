@@ -3,14 +3,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #111;
+    /* background-color: #111; */
     padding: 1.5rem 3rem;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     transition: .2s all ease;
 }
 
 .form-container:hover{
-    box-shadow: 0 0 5px black;
+    /* box-shadow: 0 0 5px black; */
 }
 
 .title{
@@ -28,7 +28,7 @@ form{
 }
 
 form input{
-    background-color: #222;
+    background-color: #111;
     border-radius: 5px;
     border: 2px solid #111;
     padding: .5rem 1rem;
