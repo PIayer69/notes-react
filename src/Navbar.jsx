@@ -1,6 +1,12 @@
-import { Link, Outlet } from "react-router-dom"
+import { Link, useNavigate, Outlet } from "react-router-dom"
 
 const Navbar = () => {
+  let navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    navigate('/login/');
+  }
   return (
     <nav>
       <div></div>
@@ -8,7 +14,7 @@ const Navbar = () => {
       <div className="nav-links">
         <ul>
           <li>
-            <Link to='logout/'>Logout</Link>
+            <div className="pointer" onClick={logout}>Logout</div>
           </li>
         </ul>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Navigate } from 'react-router-dom';
 
 import '../Navbar';
 import Navbar from "../Navbar";
@@ -27,12 +28,11 @@ const Home = ({api_url}) => {
           body: 'My very long note because I want to see if i have overflowing problems. Guess I have...'
         },
       ])
-      const [notePreview, setNotePreview] = useState(false)
-      const [noteId, setNoteId] = useState(1)
-      const notes_api_url = api_url + 'notes/' 
-    
+      const [notePreview, setNotePreview] = useState(false);
+      const [noteId, setNoteId] = useState(1);
+      const notes_api_url = api_url + 'notes/' ;
+
       useEffect(() => {
-        console.log(notes_api_url)
         fetch(notes_api_url)
         .then(res => res.json())
         .then((result) => setNotes(result))
@@ -109,6 +109,7 @@ const Home = ({api_url}) => {
     
       return (
         <>
+          {localStorage.getItem('access_token') ? null : <Navigate to='/login/' />}
           <Navbar/>
           <div className="container">
             <NewNote onAdd={newNote} />

@@ -4,12 +4,13 @@ import Landing from './pages/Landing';
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
-  const api_url = 'http://192.168.8.119:8000/api/';
+  const api_url = 'http://192.168.1.69:8000/api/';
   return (
     <Router>
         <Routes>
           <Route path="/" element={<Home api_url={api_url}/>}></Route>
-          <Route path="welcome/" element={<Landing api_url={api_url}/>}></Route>
+          <Route path="login/" element={<Landing api_url={api_url} page='login'/>}></Route>
+          <Route path="register/" element={<Landing api_url={api_url} page='register'/>}></Route>
           <Route path='*' element={<NotFoundPage />} ></Route>
         </Routes>
     </Router>
