@@ -14,68 +14,25 @@ const Home = ({api_url}) => {
     const [notes, setNotes] = useState([])
       const [notePreview, setNotePreview] = useState(false);
       const [noteId, setNoteId] = useState(1);
-      const notes_api_url = api_url + 'notes/' ;
-      const token_refresh_api_url = api_url + 'token/refresh/';
-
-      const header = {
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-      }
-
-      
-      const setTokens = (data) => {
-        console.log(`Setting new tokens: ${data['access']} ${data['refresh']}`)
-        localStorage.setItem('access_token', data['access'])
-        localStorage.setItem('refresh_token', data['refresh'])
-      }
 
 
-      const refreshTokens = (callback = undefined) => {
-        let access_token = undefined
-        fetch(token_refresh_api_url, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            'refresh': localStorage.getItem('refresh_token')
-          }) 
-        }).then(res => res.json())
-        .then(data => {
-          access_token = data['access']
-          console.log(`Got new tokens: ${data['access']} ${data['refresh']}`)
-          setTokens(data);
-          console.log(`Reading local storage: ${localStorage.getItem('access_token')} ${localStorage.getItem('refresh_token')}`)
-        })
-        if(callback) callback(access_token);
-      }
+      // const setTokens = (data) => {
+      //   console.log(`Setting new tokens: ${data['access']} ${data['refresh']}`)
+      //   localStorage.setItem('access_token', data['access'])
+      //   localStorage.setItem('refresh_token', data['refresh'])
+      // }
 
-      const getNotes = (last = false, new_token = undefined) => {
-        if(new_token){
-          header['Authorization'] = 'Bearer ' + new_token;
-          // console.log(new_token)
-        }
-        fetch(notes_api_url, {
-          headers: header
-        })
-        .then(res => res.json())
-        .then((result) => {
-          console.log(result['code'])
-          if(result['code'] === 'token_not_valid'){
-            if(last){
-              console.log('Refresh token expired, u need to login')
-              return
-            }
-            console.log(`Reading local storage: ${localStorage.getItem('access_token')} ${localStorage.getItem('refresh_token')}`)
-            refreshTokens(getNotes(last = true));
-          }
-          else{
-            setNotes(result);
-          }
+
+      const getNotes = () => {
+        axiosInstance
+        .get('notes/')
+        .then(res => {
+          console.log(res.data.code)
+          setNotes(res.data);
         })
       }
 
-      //Getting notes from backend
+      // Getting notes from backend
       useEffect(() => {
         getNotes();
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -93,33 +50,22 @@ const Home = ({api_url}) => {
     
 
       const deleteNote = (id) => {
-        fetch(`${notes_api_url}${id}/`, {
-          method: 'DELETE',
-          headers: header
-        });
+        axiosInstance
+        .delete('notes/' + id + '/');
         setNotes(notes.filter((note) => note.id !== id));
       }
     
 
       const newNote = (note) => {
-        fetch(`${notes_api_url}`, 
-        {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': header['Authorization']
-          },
-           body: JSON.stringify({
-            body: note.body
-           })
+        axiosInstance
+        .post('notes/', {
+          'body': note.body
         })
-        .then(res => res.json())
-        .then((data) => {
+        .then(res => {
           note = {
-            'id': data.id,
-            'body': data.body,
-            'created': data.created
+            'id': res.data.id,
+            'body': res.data.body,
+            'created': res.data.created
           }
           setNotes([...notes, note]);
         });
@@ -127,24 +73,15 @@ const Home = ({api_url}) => {
     
 
       const editNote = (id, body) => {
-        fetch(`${notes_api_url}${id}/`, 
-        {
-          method: 'PUT',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': header['Authorization']
-          } ,
-           body: JSON.stringify({
-            body: body
-           })
+        axiosInstance
+        .put('notes/' + id + '/', {
+          'body': body
         })
-        .then(res => res.json())
-        .then((data) => {
+        .then(res => {
           const updated_note = {
-            'id': data.id,
-            'body': data.body,
-            'created': data.created
+            'id': res.data.id,
+            'body': res.data.body,
+            'created': res.data.created
           }
           setNotes(() => {
             return(notes.map((note) => {
@@ -153,7 +90,6 @@ const Home = ({api_url}) => {
               }
               return note
             }));
-    
           });
         });
       }

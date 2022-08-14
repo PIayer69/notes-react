@@ -5,7 +5,6 @@ import axiosInstance from '../Axios';
 import './assets/Login-Register.css';
 
 const Login = ({api_url}) => {
-  const token_obtain_api_url = api_url + 'token/'; 
   const initialFormData = Object.freeze({
     'username': '',
     'password': ''
@@ -24,18 +23,17 @@ const Login = ({api_url}) => {
   const login = (e, formData) => {
     e.preventDefault();
     axiosInstance
-    .post(token_obtain_api_url, formData)
+    .post('token/', formData)
     .then(res => {
       console.log(res.status)
       if(res.status >= 200 && res.status < 300){
-        return res.data
+        localStorage.setItem('access_token', res.data.access);
+        localStorage.setItem('refresh_token', res.data.refresh);
+        axiosInstance.defaults.headers['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+        navigate('/');
+        return
       }
       throw new Error();
-    }).then(tokens => {
-      console.log(tokens)
-      localStorage.setItem('access_token', tokens['access']);
-      localStorage.setItem('refresh_token', tokens['refresh']);
-      navigate('/')
     }).catch(err => console.log('Fetch failed'))
   }
 

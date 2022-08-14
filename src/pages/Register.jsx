@@ -5,7 +5,6 @@ import './assets/Login-Register.css';
 import axiosInstance from '../Axios';
 
 const Register = ({api_url}) => {
-  const register_api_url = api_url + 'register/';
   const initialFormData = Object.freeze({
     'username': '',
     'email': '',
@@ -27,7 +26,7 @@ const Register = ({api_url}) => {
   const register = (e, formData) => {
     e.preventDefault();
     axiosInstance
-    .post(register_api_url, formData)
+    .post('register/', formData)
     .then(res => res.data)
     .then(json => console.log(json))
     .then(() => navigate('/login/'));
