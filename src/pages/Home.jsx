@@ -15,14 +15,6 @@ const Home = ({api_url}) => {
       const [notePreview, setNotePreview] = useState(false);
       const [noteId, setNoteId] = useState(1);
 
-
-      // const setTokens = (data) => {
-      //   console.log(`Setting new tokens: ${data['access']} ${data['refresh']}`)
-      //   localStorage.setItem('access_token', data['access'])
-      //   localStorage.setItem('refresh_token', data['refresh'])
-      // }
-
-
       const getNotes = () => {
         axiosInstance
         .get('notes/')

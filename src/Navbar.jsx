@@ -1,11 +1,22 @@
 import { Link, useNavigate, Outlet } from "react-router-dom"
+import axiosInstance from "./Axios";
 
 const Navbar = () => {
   let navigate = useNavigate();
   const logout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    navigate('/login/');
+    axiosInstance
+    .post('/logout/', {refresh_token: localStorage.getItem('refresh_token')})
+    .then((res) => {
+      if(res.status >= 200 && res.status < 300){
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        axiosInstance.defaults.headers['Authorization'] = null;
+        navigate('/login/');
+        return
+      }
+      throw new Error('Something went wrong');
+    })
+    .catch(err => console.log(err))
   }
   return (
     <nav>
