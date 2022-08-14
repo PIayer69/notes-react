@@ -4,7 +4,7 @@ import Landing from './pages/Landing';
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
-  const api_url = 'http://192.168.1.69:8000/api/';
+  const api_url = 'http://127.0.0.1:8000/api/';
   return (
     <Router>
         <Routes>

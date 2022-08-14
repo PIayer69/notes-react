@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate } from 'react-router-dom';
 
+import axiosInstance from '../Axios';
 import '../Navbar';
 import Navbar from "../Navbar";
 import Backdrop from "./components/Backdrop";
@@ -10,35 +11,77 @@ import Notes from "./components/Notes";
 
 
 const Home = ({api_url}) => {
-    const [notes, setNotes] = useState([
-        {
-          id: 1,
-          body: 'My first note'
-        },
-        {
-          id: 2,
-          body: 'My second note'
-        },
-        {
-          id: 3,
-          body: 'My third note'
-        },
-        {
-          id: 4,
-          body: 'My very long note because I want to see if i have overflowing problems. Guess I have...'
-        },
-      ])
+    const [notes, setNotes] = useState([])
       const [notePreview, setNotePreview] = useState(false);
       const [noteId, setNoteId] = useState(1);
       const notes_api_url = api_url + 'notes/' ;
+      const token_refresh_api_url = api_url + 'token/refresh/';
 
-      useEffect(() => {
-        fetch(notes_api_url)
+      const header = {
+        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      }
+
+      
+      const setTokens = (data) => {
+        console.log(`Setting new tokens: ${data['access']} ${data['refresh']}`)
+        localStorage.setItem('access_token', data['access'])
+        localStorage.setItem('refresh_token', data['refresh'])
+      }
+
+
+      const refreshTokens = (callback = undefined) => {
+        let access_token = undefined
+        fetch(token_refresh_api_url, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            'refresh': localStorage.getItem('refresh_token')
+          }) 
+        }).then(res => res.json())
+        .then(data => {
+          access_token = data['access']
+          console.log(`Got new tokens: ${data['access']} ${data['refresh']}`)
+          setTokens(data);
+          console.log(`Reading local storage: ${localStorage.getItem('access_token')} ${localStorage.getItem('refresh_token')}`)
+        })
+        if(callback) callback(access_token);
+      }
+
+      const getNotes = (last = false, new_token = undefined) => {
+        if(new_token){
+          header['Authorization'] = 'Bearer ' + new_token;
+          // console.log(new_token)
+        }
+        fetch(notes_api_url, {
+          headers: header
+        })
         .then(res => res.json())
-        .then((result) => setNotes(result))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        .then((result) => {
+          console.log(result['code'])
+          if(result['code'] === 'token_not_valid'){
+            if(last){
+              console.log('Refresh token expired, u need to login')
+              return
+            }
+            console.log(`Reading local storage: ${localStorage.getItem('access_token')} ${localStorage.getItem('refresh_token')}`)
+            refreshTokens(getNotes(last = true));
+          }
+          else{
+            setNotes(result);
+          }
+        })
+      }
+
+      //Getting notes from backend
+      useEffect(() => {
+        getNotes();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
       
+
       const toggleNotePreview = (id) => {
         setNotePreview(!notePreview)
         setNoteId(id)
@@ -48,18 +91,24 @@ const Home = ({api_url}) => {
       });
       }
     
+
       const deleteNote = (id) => {
-        fetch(`${notes_api_url}${id}/`, {method: 'DELETE'});
+        fetch(`${notes_api_url}${id}/`, {
+          method: 'DELETE',
+          headers: header
+        });
         setNotes(notes.filter((note) => note.id !== id));
       }
     
+
       const newNote = (note) => {
         fetch(`${notes_api_url}`, 
         {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': header['Authorization']
           },
            body: JSON.stringify({
             body: note.body
@@ -76,14 +125,16 @@ const Home = ({api_url}) => {
         });
       }
     
+
       const editNote = (id, body) => {
         fetch(`${notes_api_url}${id}/`, 
         {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
+            'Content-Type': 'application/json',
+            'Authorization': header['Authorization']
+          } ,
            body: JSON.stringify({
             body: body
            })
@@ -107,13 +158,19 @@ const Home = ({api_url}) => {
         });
       }
     
+
       return (
         <>
           {localStorage.getItem('access_token') ? null : <Navigate to='/login/' />}
           <Navbar/>
           <div className="container">
             <NewNote onAdd={newNote} />
-            <Notes notes={notes} onDelete={deleteNote} onEdit={editNote} onPreview={toggleNotePreview}/>
+            {
+              notes ?
+              <Notes notes={notes} onDelete={deleteNote} onEdit={editNote} onPreview={toggleNotePreview}/>
+              :
+              'There are no notes available'
+            }
             {
               notePreview && 
               <>
