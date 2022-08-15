@@ -19,8 +19,8 @@ const Home = ({api_url}) => {
         axiosInstance
         .get('notes/')
         .then(res => {
-          console.log(res.data.code)
-          setNotes(res.data);
+          console.log(res)
+          setNotes(res.data.notes);
         })
       }
 
