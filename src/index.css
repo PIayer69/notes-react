@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-html{
+html {
   height: 100%;
 }
 
-body{
+body {
   background-color: #222;
-  font-family: 'Indie Flower', cursive;
+  font-family: "Indie Flower", cursive;
   height: 100%;
 }
 
-#root{
+#root {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-nav{
+nav {
   min-width: 100%;
   height: 69px;
   padding: 0 2rem;
@@ -33,18 +33,18 @@ nav{
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.logo{
+.logo {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-nav a{
+nav a {
   text-decoration: none;
   color: white;
 }
 
-.nav-links ul{
+.nav-links ul {
   display: flex;
   list-style: none;
   justify-content: flex-end;
@@ -57,7 +57,7 @@ nav a{
   font-size: 1.5rem;
 }
 
-.container{
+.container {
   padding: 2rem;
   display: flex;
   flex: 1;
@@ -65,7 +65,7 @@ nav a{
   flex-wrap: wrap;
 }
 
-.rectangle{
+.rectangle {
   font-size: 1.4rem;
   max-width: 200px;
   width: 200px;
@@ -77,27 +77,33 @@ nav a{
   position: relative;
 }
 
-.rectangle:hover{
+.rectangle:hover {
   box-shadow: 0 0 5px black;
 }
 
-.padding{
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.padding {
   padding: 1rem;
 }
 
-.transition{
-  transition: .3s all ease;
+.transition {
+  transition: 0.3s all ease;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.no-overflow{
+.no-overflow {
   overflow: hidden;
 }
 
-.note{
+.note {
   overflow-y: auto;
   position: relative;
   padding-top: 2rem;
@@ -105,40 +111,40 @@ nav a{
   word-break: break-word;
 }
 
-.options{
+.options {
   opacity: 0.1;
   width: 100%;
   background-color: #222;
-  padding: .3rem 0;
+  padding: 0.3rem 0;
   position: absolute;
   display: flex;
   justify-content: flex-end;
   z-index: 1;
 }
 
-.options:hover{
+.options:hover {
   opacity: 1;
 }
 
-.new-note-btn{
+.new-note-btn {
   font-size: 4rem;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: .3s all ease;
+  transition: 0.3s all ease;
 }
 
-.new-note-btn:hover{
+.new-note-btn:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.new-note-btn div{
+.new-note-btn div {
   font-size: 2rem;
 }
 
-.new-note-input{
+.new-note-input {
   width: 100%;
   height: 100%;
   background-color: #111;
@@ -148,7 +154,7 @@ nav a{
   resize: none;
 }
 
-.new-note-btns{
+.new-note-btns {
   font-size: 1rem;
   position: absolute;
   bottom: 0;
@@ -157,29 +163,28 @@ nav a{
   width: 100%;
   display: flex;
   justify-content: space-between;
-
 }
 
-.new-note-add-btn{
+.new-note-add-btn {
   font-size: 1rem;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   background-color: #222;
-  opacity: .3;
+  opacity: 0.3;
 }
 
-.new-note-add-btn:hover{
+.new-note-add-btn:hover {
   opacity: 1;
 }
 
-.submit-btn{
+.submit-btn {
   background-color: rgb(11, 123, 3);
 }
 
-.cancel-btn{
+.cancel-btn {
   background-color: rgb(152, 9, 9);
 }
 
-.backdrop{
+.backdrop {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -190,7 +195,7 @@ nav a{
   z-index: 2;
 }
 
-.note-preview{
+.note-preview {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -206,19 +211,18 @@ nav a{
   padding-right: 4rem;
 }
 
-.note-preview-cross{
+.note-preview-cross {
   position: absolute;
   top: 1rem;
   right: 1rem;
 }
 
-
-@media screen and (max-width: 530px){
-  .rectangle{
+@media screen and (max-width: 530px) {
+  .rectangle {
     min-width: 90%;
   }
 
-  .note-preview{
+  .note-preview {
     width: 90%;
     height: 90%;
   }
