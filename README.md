@@ -17,14 +17,12 @@ Django Rest Framework:
 - APIViews
 - ModelViewsets
 - Permissions
-- SimpleJWT concept (how tokens are structured, what is refresh token rotating, what are sliding tokens)
+- SimpleJWT concept (how tokens are structured, what is refresh token rotating, what are sliding tokens, token blacklisting)
 
 ## Things that still needs to be done:
 
 - Feedback (Disabling button on press, Info on error, etc.)
-- Get rid of double API calls (probably somtehing to do with useEffect)
 - Information when data is loading
-- Webpage responsiveness (mobile support)
 
 Optional:
 

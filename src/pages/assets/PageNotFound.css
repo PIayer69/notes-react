@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     color: white;
-    height: 100%;
 }
 
 .error-left{
@@ -30,4 +29,14 @@
 
 .error-left a svg{
     margin-left: .3rem;
+}
+
+.error-right img{
+    max-width: 100%;
+}
+
+@media screen and (max-width: 745px) {
+    .error-container{
+        flex-direction: column-reverse;
+    }
 }

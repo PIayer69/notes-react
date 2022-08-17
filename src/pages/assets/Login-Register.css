@@ -3,14 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: #111; */
     padding: 1.5rem 3rem;
-    /* border-radius: 15px; */
     transition: .2s all ease;
-}
-
-.form-container:hover{
-    /* box-shadow: 0 0 5px black; */
 }
 
 .title{

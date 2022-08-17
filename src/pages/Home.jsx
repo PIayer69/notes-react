@@ -9,7 +9,7 @@ import NewNote from "./components/NewNote";
 import NotePreview from "./components/NotePreview";
 import Notes from "./components/Notes";
 
-const Home = ({ api_url }) => {
+const Home = () => {
   const [notes, setNotes] = useState([]);
   const [notePreview, setNotePreview] = useState(false);
   const [noteId, setNoteId] = useState(1);

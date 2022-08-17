@@ -20,7 +20,7 @@ const Navbar = () => {
   }
   return (
     <nav>
-      <div></div>
+      <div className="nav-placeholder"></div>
       <div className="logo"><Link to='/'>Note Taking App</Link></div>
       <div className="nav-links">
         <ul>

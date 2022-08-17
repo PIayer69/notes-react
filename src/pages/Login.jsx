@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../Axios';
 
 import './assets/Login-Register.css';
+import SubmitButton from './components/SubmitButton';
 
-const Login = ({api_url}) => {
+const Login = ({setErrorMessage}) => {
   const initialFormData = Object.freeze({
     'username': '',
     'password': ''
@@ -21,6 +22,7 @@ const Login = ({api_url}) => {
   }
 
   const login = (e, formData) => {
+    setErrorMessage('');
     e.preventDefault();
     axiosInstance
     .post('token/', formData)
@@ -34,7 +36,11 @@ const Login = ({api_url}) => {
         return
       }
       throw new Error();
-    }).catch(err => console.log('Fetch failed'))
+    }).catch(err => {
+      if(err.response.status){
+        setErrorMessage('Username or password incorrect')
+      }
+    })
   }
 
   return (
@@ -43,7 +49,7 @@ const Login = ({api_url}) => {
         <form onSubmit={(e) => login(e, formData)}>
             <input type="text" name='username' value={formData.username} onChange={handleChange} placeholder='Username' />
             <input type="password" name='password' value={formData.password} onChange={handleChange} placeholder='Password' />
-            <input type="submit" value='Login' />
+            <SubmitButton value='Login' />
         </form>
     </div>
   )

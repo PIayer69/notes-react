@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import './assets/Login-Register.css';
 import axiosInstance from '../Axios';
+import SubmitButton from './components/SubmitButton';
 
-const Register = ({api_url}) => {
+const Register = ({setErrorMessage}) => {
   const initialFormData = Object.freeze({
     'username': '',
     'email': '',
@@ -24,12 +25,16 @@ const Register = ({api_url}) => {
   }
 
   const register = (e, formData) => {
+    setErrorMessage('');
     e.preventDefault();
     axiosInstance
     .post('register/', formData)
     .then(res => res.data)
     .then(json => console.log(json))
-    .then(() => navigate('/login/'));
+    .then(() => navigate('/login/'))
+    .catch(err => {
+      setErrorMessage(err.response.data['Error'])
+    });
   };
 
   return (
@@ -40,7 +45,7 @@ const Register = ({api_url}) => {
             <input type="email" name='email' value={formData.email} onChange={handleChange} placeholder='Email' />
             <input type="password" name='password' value={formData.password} onChange={handleChange} placeholder='Password' />
             <input type="password" name='password1' value={formData.password1} onChange={handleChange} placeholder='Password Again' />
-            <input type="submit" value='Register' />
+            <SubmitButton value='Register' />
         </form>
     </div>
   )
