@@ -2,8 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import './assets/Landing.css';
-import Login from './Login';
-import Register from './Register';
+import Login from './components/Login';
+import Register from './components/Register';
 
 const Landing = ({page}) => {
   let navigate = useNavigate();

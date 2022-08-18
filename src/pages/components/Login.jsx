@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../Axios';
+import axiosInstance from '../../Axios';
 
-import './assets/Login-Register.css';
-import SubmitButton from './components/SubmitButton';
+import '../assets/Login-Register.css';
+import SubmitButton from './SubmitButton';
 
 const Login = ({setErrorMessage}) => {
   const initialFormData = Object.freeze({
@@ -11,6 +11,7 @@ const Login = ({setErrorMessage}) => {
     'password': ''
   })
   const [formData, setFormData] = useState(initialFormData);
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   let navigate = useNavigate();
 
@@ -23,11 +24,11 @@ const Login = ({setErrorMessage}) => {
 
   const login = (e, formData) => {
     setErrorMessage('');
+    setButtonClicked((prev) => !prev);
     e.preventDefault();
     axiosInstance
     .post('token/', formData)
     .then(res => {
-      console.log(res.status)
       if(res.status >= 200 && res.status < 300){
         localStorage.setItem('access_token', res.data.access);
         localStorage.setItem('refresh_token', res.data.refresh);
@@ -37,19 +38,20 @@ const Login = ({setErrorMessage}) => {
       }
       throw new Error();
     }).catch(err => {
-      if(err.response.status){
+      if(err.response.status === 401){
         setErrorMessage('Username or password incorrect')
       }
     })
+    .finally(() => setButtonClicked((prev) => !prev));
   }
 
   return (
     <div className='form-container'>
         <div className="title">Login</div>
-        <form onSubmit={(e) => login(e, formData)}>
+        <form autoComplete='off'>
             <input type="text" name='username' value={formData.username} onChange={handleChange} placeholder='Username' />
             <input type="password" name='password' value={formData.password} onChange={handleChange} placeholder='Password' />
-            <SubmitButton value='Login' />
+            <SubmitButton value={['Login', 'Logging in...']} disabled={buttonClicked} onClick={(e) => login(e, formData)} />
         </form>
     </div>
   )

@@ -21,7 +21,7 @@ Django Rest Framework:
 
 ## Things that still needs to be done:
 
-- Feedback (Disabling button on press, Info on error, etc.)
+- Feedback (Disabling button on press, etc.)
 - Information when data is loading
 
 Optional:

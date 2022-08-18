@@ -1,9 +1,7 @@
-import { useState } from "react"
 
-const SubmitButton = ({value, disabled=false}) => {
-    const [clicked, setClicked] = useState(false);
+const SubmitButton = ({value, disabled, onClick}) => {
   return (
-    <input type="submit" disabled={disabled} value={value} onClick={() => setClicked(!clicked)}/>
+    <input type="submit" disabled={disabled} value={disabled ? value[1] : value[0]} onClick={onClick}/>
   )
 }
 

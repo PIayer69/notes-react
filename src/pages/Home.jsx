@@ -10,25 +10,26 @@ import NotePreview from "./components/NotePreview";
 import Notes from "./components/Notes";
 
 const Home = () => {
-  const [notes, setNotes] = useState([]);
-  const [notePreview, setNotePreview] = useState(false);
-  const [noteId, setNoteId] = useState(1);
-
-  const getNotes = () => {
-    axiosInstance.get("notes/").then((res) => {
-      if (typeof res.data.notes !== "undefined") setNotes(res.data.notes);
-    });
-  };
+  const [notes, setNotes] = useState(null);
+  const [notePreview, setNotePreview] = useState({
+    bool: false,
+    id: 1,
+  });
 
   // Getting notes from backend
   useEffect(() => {
-    getNotes();
+    axiosInstance.get("notes/").then((res) => {
+      if (typeof res.data.notes !== "undefined") setNotes(res.data.notes);
+      else setNotes([]);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleNotePreview = (id) => {
-    setNotePreview(!notePreview);
-    setNoteId(id);
+    setNotePreview({
+      bool: !notePreview.bool,
+      id: id,
+    });
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -51,7 +52,7 @@ const Home = () => {
           body: res.data.body,
           created: res.data.created,
         };
-        setNotes((prev) => [note, ...prev]);
+        setNotes((prev) => prev ? [note, ...prev] : [note]);
       });
   };
 
@@ -83,7 +84,7 @@ const Home = () => {
       <Navbar />
       <div className="container">
         <NewNote onAdd={newNote} />
-        {notes.length ? (
+        {notes && notes.length ? (
           <Notes
             notes={notes}
             onDelete={deleteNote}
@@ -92,15 +93,19 @@ const Home = () => {
           />
         ) : (
           <div className="placeholder rectangle padding center">
-            It is empty... <br></br>Too empty
+            {notes
+              ? "It is empty... Too empty"
+              : "We are getting your notes..."}
           </div>
         )}
-        {notePreview && (
+        {notePreview.bool && (
           <>
             <Backdrop />
             <NotePreview
-              note={notes.filter((note) => note.id === noteId)[0]}
-              onClose={() => setNotePreview(false)}
+              note={notes.filter((note) => note.id === notePreview.id)[0]}
+              onClose={() =>
+                setNotePreview({ ...notePreview, bool: !notePreview.bool })
+              }
             />
           </>
         )}
