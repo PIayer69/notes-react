@@ -20,6 +20,7 @@ Django Rest Framework:
 - SimpleJWT concept (how tokens are structured, what is refresh token rotating, what are sliding tokens, token blacklisting)
 
 ## Things that still needs to be done:
+
 - Optimisations
 
 Optional:
