@@ -20,11 +20,16 @@ Django Rest Framework:
 - SimpleJWT concept (how tokens are structured, what is refresh token rotating, what are sliding tokens, token blacklisting)
 
 ## Things that still needs to be done:
-
-- Feedback (Disabling button on press, etc.)
-- Information when data is loading
+- Optimisations
 
 Optional:
 
 - Page transitions
 - Animations
+
+
+Done:
+
+- ~~Feedback (Disabling button on press, etc.)~~
+- ~~Information when data is loading~~
+- ~~Mobile support (responsive design)~~
